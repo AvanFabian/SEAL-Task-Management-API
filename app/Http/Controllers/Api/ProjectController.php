@@ -20,23 +20,40 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string'
-        ]);
-        
-        // Perbaikan untuk mengambil user_id
-        $user = Auth::user();
-        if (!$user) {
-            return response()->json(['status' => 'error', 'message' => 'Unauthorized'], 401);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'nullable|string'
+            ], [
+                'name.required' => 'Nama project harus diisi',
+                'name.max' => 'Nama project tidak boleh lebih dari 255 karakter'
+            ]);
+            
+            $user = Auth::user();
+            if (!$user) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Token tidak valid atau kadaluarsa'
+                ], 401);
+            }
+    
+            $project = Project::create([
+                ...$validated,
+                'user_id' => $user->id
+            ]);
+    
+            return response()->json([
+                'status' => 'success',
+                'data' => $project,
+                'message' => 'Project berhasil dibuat'
+            ], 201);
+    
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat membuat project: ' . $e->getMessage()
+            ], 400);
         }
-
-        $project = Project::create([
-            ...$validated,
-            'user_id' => $user->id
-        ]);
-
-        return response()->json(['status' => 'success', 'data' => $project], 201);
     }
 
     public function show(Project $project)
@@ -47,16 +64,35 @@ class ProjectController extends Controller
 
     public function update(Request $request, Project $project)
     {
-        $this->authorize('update', $project);
-
-        $validated = $request->validate([
-            'name' => 'sometimes|string|max:255',
-            'description' => 'nullable|string'
-        ]);
-
-        $project->update($validated);
-
-        return response()->json(['status' => 'success', 'data' => $project]);
+        try {
+            $this->authorize('update', $project);
+    
+            $validated = $request->validate([
+                'name' => 'sometimes|string|max:255',
+                'description' => 'nullable|string'
+            ], [
+                'name.max' => 'Nama project tidak boleh lebih dari 255 karakter'
+            ]);
+    
+            $project->update($validated);
+    
+            return response()->json([
+                'status' => 'success',
+                'data' => $project,
+                'message' => 'Project berhasil diupdate'
+            ]);
+    
+        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Anda tidak memiliki akses untuk mengubah project ini'
+            ], 403);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Terjadi kesalahan saat mengupdate project: ' . $e->getMessage()
+            ], 400);
+        }
     }
 
     public function destroy(Project $project)

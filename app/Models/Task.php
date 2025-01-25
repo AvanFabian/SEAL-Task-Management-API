@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
 class Task extends Model
 {
     protected $fillable = [
@@ -19,17 +18,17 @@ class Task extends Model
         'due_date' => 'datetime'
     ];
 
+    // fungsi ini digunakan untuk mendefinisikan relasi antara model Task dengan model Project
+    // Relasi ini menunjukkan bahwa satu task dimiliki oleh satu project
     public function project()
     {
         return $this->belongsTo(Project::class);
     }
-
+    
+    // fungsi ini digunakan untuk mendefinisikan relasi antara model Task dengan model User
+    // Relasi ini menunjukkan bahwa satu task dimiliki oleh satu user
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-    public function scopeAssignedTo($query, $userId)
-{
-    return $query->where('user_id', $userId);
-}
 }

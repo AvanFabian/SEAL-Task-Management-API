@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class TaskController extends Controller
 {
     use AuthorizesRequests;
+    // fungsi index digunakan untuk mengambil semua data task
     public function index(Request $request)
     {
         $query = Task::query();
@@ -25,6 +26,7 @@ class TaskController extends Controller
         return response()->json(['status' => 'success', 'data' => $tasks]);
     }
 
+    // fungsi store digunakan untuk membuat data task baru
     public function store(Request $request)
     {
         try {
@@ -63,12 +65,14 @@ class TaskController extends Controller
         }
     }
 
+    // fungsi show digunakan untuk mengambil data task berdasarkan ID
     public function show(Task $task)
     {
         $task->load(['user', 'project']);
         return response()->json(['status' => 'success', 'data' => $task]);
     }
 
+    // fungsi update digunakan untuk mengubah data task
     public function update(Request $request, Task $task)
     {
         try {
@@ -108,6 +112,7 @@ class TaskController extends Controller
         }
     }
 
+    // fungsi destroy digunakan untuk menghapus data task
     public function destroy(Task $task)
     {
         $this->authorize('delete', $task);

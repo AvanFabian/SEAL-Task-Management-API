@@ -12,12 +12,14 @@ class ProjectController extends Controller
 {
     use AuthorizesRequests; 
 
+    // fungsi index digunakan untuk mengambil semua data project
     public function index()
     {
         $projects = Project::with('user')->get();
         return response()->json(['status' => 'success', 'data' => $projects]);
     }
 
+    // fungsi store digunakan untuk membuat data project baru
     public function store(Request $request)
     {
         try {
@@ -56,12 +58,14 @@ class ProjectController extends Controller
         }
     }
 
+    // fungsi show digunakan untuk mengambil data project berdasarkan ID
     public function show(Project $project)
     {
         $project->load(['user', 'tasks']);
         return response()->json(['status' => 'success', 'data' => $project]);
     }
 
+    // fungsi update digunakan untuk mengubah data project
     public function update(Request $request, Project $project)
     {
         try {
@@ -95,6 +99,7 @@ class ProjectController extends Controller
         }
     }
 
+    // fungsi destroy digunakan untuk menghapus data project
     public function destroy(Project $project)
     {
         $this->authorize('delete', $project);

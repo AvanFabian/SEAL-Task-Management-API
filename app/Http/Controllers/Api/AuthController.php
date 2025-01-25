@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    // fungsi register digunakan untuk mendaftarkan user baru
     public function register(Request $request)
     {
         try {
@@ -50,7 +51,8 @@ class AuthController extends Controller
             ], 400);
         }
     }
-    
+
+    // fungsi login digunakan untuk login user
     public function login(Request $request)
     {
         try {

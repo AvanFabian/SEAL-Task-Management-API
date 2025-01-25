@@ -10,17 +10,20 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    // fungsi index digunakan untuk mengambil semua data user
     public function index()
     {
         $users = User::all();
         return response()->json(['status' => 'success', 'data' => $users]);
     }
 
+    // fungsi store digunakan untuk membuat data user baru
     public function show(User $user)
     {
         return response()->json(['status' => 'success', 'data' => $user]);
     }
 
+    // fungsi update digunakan untuk mengubah data user
     public function update(Request $request, User $user)
     {
         $validated = $request->validate([
@@ -38,6 +41,7 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'data' => $user]);
     }
 
+    // fungsi destroy digunakan untuk menghapus data user
     public function destroy(User $user)
     {
         if ($user->avatar) {
@@ -47,6 +51,7 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'message' => 'User deleted']);
     }
 
+    // fungsi uploadAvatar digunakan untuk mengunggah avatar user
     public function uploadAvatar(Request $request, User $user)
     {
         $request->validate([

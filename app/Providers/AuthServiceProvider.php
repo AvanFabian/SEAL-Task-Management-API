@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Models\Project;
+use App\Models\Task;
 use App\Policies\ProjectPolicy;
+use App\Policies\TaskPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -16,6 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Project::class => ProjectPolicy::class,
+        Task::class => TaskPolicy::class
     ];
 
     /**
@@ -25,8 +28,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         // Register the policies by creating the gates directly
         Gate::policy(Project::class, ProjectPolicy::class);
-        
-        // Jika ada policy lain, tambahkan di sini
-        // Gate::policy(OtherModel::class, OtherPolicy::class);
+        Gate::policy(Task::class, TaskPolicy::class);        
     }
 }

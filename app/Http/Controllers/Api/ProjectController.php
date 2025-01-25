@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests; // Tambahkan ini
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests; 
 
 class ProjectController extends Controller
 {
-    use AuthorizesRequests; // Tambahkan ini
+    use AuthorizesRequests; 
 
     public function index()
     {

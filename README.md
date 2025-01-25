@@ -61,11 +61,13 @@ API untuk manajemen tugas yang memungkinkan pengguna untuk mengelola proyek dan 
 #### 3. Update User
 - **Endpoint:** `PUT /api/users/{id}`
 - **Auth:** Required
+- **Authorization:** User hanya bisa update profilnya sendiri
 - **Test Cases:**
-  - ✅ Update dengan data valid
-  - ✅ Update password
+  - ✅ Update data diri sendiri
+  - ✅ Update password sendiri
+  - ❌ Update data user lain (forbidden)
   - ❌ Update dengan email yang sudah ada
-  - ❌ Update user lain (unauthorized)
+  - ❌ Update tanpa token
 - **Request Body:**
   ```json
   {
@@ -78,11 +80,16 @@ API untuk manajemen tugas yang memungkinkan pengguna untuk mengelola proyek dan 
 #### 4. Upload Avatar
 - **Endpoint:** `POST /api/users/{id}/avatar`
 - **Auth:** Required
+- **Authorization:** User hanya bisa upload avatar untuk akunnya sendiri
+- **Content-Type:** `multipart/form-data`
 - **Test Cases:**
-  - ✅ Upload image valid
+  - ✅ Upload avatar untuk akun sendiri
+  - ❌ Upload avatar untuk user lain (forbidden)
   - ❌ Upload file non-image
   - ❌ Upload file terlalu besar (>2MB)
-- **Request Body:** `multipart/form-data`
+  - ❌ Upload tanpa file
+  - ❌ Upload tanpa token
+- **Request Body:**
   ```
   avatar: [file]
   ```
@@ -90,10 +97,12 @@ API untuk manajemen tugas yang memungkinkan pengguna untuk mengelola proyek dan 
 #### 5. Delete User
 - **Endpoint:** `DELETE /api/users/{id}`
 - **Auth:** Required
+- **Authorization:** User hanya bisa menghapus akunnya sendiri
 - **Test Cases:**
-  - ✅ Delete existing user
-  - ❌ Delete non-existent user
-  - ❌ Delete user lain (unauthorized)
+  - ✅ Delete akun sendiri
+  - ❌ Delete akun user lain (forbidden)
+  - ❌ Delete tanpa token
+  - ❌ Delete user yang tidak ada
 
 ### Projects API
 

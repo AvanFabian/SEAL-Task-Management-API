@@ -67,17 +67,41 @@ class UserController extends Controller
     // fungsi uploadAvatar digunakan untuk mengunggah avatar user
     public function uploadAvatar(Request $request, User $user)
     {
-        $request->validate([
-            'avatar' => 'required|image|max:2048'
-        ]);
-
-        if ($user->avatar) {
-            Storage::delete($user->avatar);
+        try {
+            // Tambahkan authorization check
+            $this->authorize('uploadAvatar', $user);
+    
+            $request->validate([
+                'avatar' => 'required|image|max:2048'
+            ], [
+                'avatar.required' => 'File avatar harus diupload',
+                'avatar.image' => 'File harus berupa gambar',
+                'avatar.max' => 'Ukuran file tidak boleh lebih dari 2MB'
+            ]);
+    
+            if ($user->avatar) {
+                Storage::delete($user->avatar);
+            }
+    
+            $path = $request->file('avatar')->store('avatars');
+            $user->update(['avatar' => $path]);
+    
+            return response()->json([
+                'status' => 'success',
+                'data' => $user,
+                'message' => 'Avatar berhasil diupload'
+            ]);
+    
+        } catch (\Illuminate\Auth\Access\AuthorizationException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Anda tidak memiliki izin untuk mengubah avatar user ini'
+            ], 403);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Gagal mengupload avatar: ' . $e->getMessage()
+            ], 400);
         }
-
-        $path = $request->file('avatar')->store('avatars');
-        $user->update(['avatar' => $path]);
-
-        return response()->json(['status' => 'success', 'data' => $user]);
     }
 }

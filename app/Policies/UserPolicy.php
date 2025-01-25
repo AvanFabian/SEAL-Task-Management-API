@@ -15,4 +15,9 @@ class UserPolicy
     {
         return $authenticatedUser->id === $targetUser->id;
     }
+
+    public function uploadAvatar(User $authenticatedUser, User $targetUser): bool
+{
+    return $authenticatedUser->id === $targetUser->id;
+}
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests; 
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -23,9 +24,9 @@ class ProjectController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string'
         ]);
-
+        
         // Perbaikan untuk mengambil user_id
-        $user = auth()->user();
+        $user = Auth::user();
         if (!$user) {
             return response()->json(['status' => 'error', 'message' => 'Unauthorized'], 401);
         }

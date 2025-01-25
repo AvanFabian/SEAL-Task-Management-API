@@ -45,42 +45,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password123'),
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'name' => 'Emily Davis',
-                'email' => 'emily@example.com',
-                'password' => Hash::make('password123'),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Chris Wilson',
-                'email' => 'chris@example.com',
-                'password' => Hash::make('password123'),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Lisa Anderson',
-                'email' => 'lisa@example.com',
-                'password' => Hash::make('password123'),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Kevin Taylor',
-                'email' => 'kevin@example.com',
-                'password' => Hash::make('password123'),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Amanda Martinez',
-                'email' => 'amanda@example.com',
-                'password' => Hash::make('password123'),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+            ]
         ];
 
         User::insert($users);

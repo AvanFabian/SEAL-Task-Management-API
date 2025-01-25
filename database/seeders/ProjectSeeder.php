@@ -47,42 +47,7 @@ class ProjectSeeder extends Seeder
                 'user_id' => $users->random()->id,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ],
-            [
-                'name' => 'API Integration',
-                'description' => 'Integrating third-party payment gateway APIs',
-                'user_id' => $users->random()->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Security Audit',
-                'description' => 'Conducting comprehensive security audit of systems',
-                'user_id' => $users->random()->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Content Management System',
-                'description' => 'Developing new CMS for content team',
-                'user_id' => $users->random()->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Employee Training Program',
-                'description' => 'Creating online training modules for new employees',
-                'user_id' => $users->random()->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'name' => 'Data Analytics Dashboard',
-                'description' => 'Building real-time analytics dashboard',
-                'user_id' => $users->random()->id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+            ]
         ];
 
         Project::insert($projects);

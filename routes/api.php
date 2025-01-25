@@ -7,10 +7,11 @@ use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\TaskController;
 use App\Http\Controllers\Api\AuthController;
 
+// Auth routes
+Route::post('auth/register', [AuthController::class, 'register']);
+Route::post('auth/login', [AuthController::class, 'login']);
+
 Route::middleware('auth:sanctum')->group(function () {
-    // Auth routes
-    Route::post('auth/register', [AuthController::class, 'register']);
-    Route::post('auth/login', [AuthController::class, 'login']);
 
     // User routes
     Route::apiResource('users', UserController::class);

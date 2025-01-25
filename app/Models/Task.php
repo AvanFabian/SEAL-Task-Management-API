@@ -28,4 +28,8 @@ class Task extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function scopeAssignedTo($query, $userId)
+{
+    return $query->where('user_id', $userId);
+}
 }
